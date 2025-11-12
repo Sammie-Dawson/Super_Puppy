@@ -69,21 +69,15 @@ class supper_puppy():
             self.dead = True
         self.alpha = 255 * (1 - (self.age / self.life))
     
-    def image_run(self, screen, fullscreen):
-        self.screen=screen
-        self.fullscreen=fullscreen
+    def image_run(self):
+        
         background = pygame.image.load('Supper_puppy.png').convert_alpha()
 
-        if fullscreen==True:
-            sizes=pygame.display.get_desktop_sizes()
-        else:
-            sizes=[(800,600)]
-        Width=screenSize_Format_Width(sizes)
-        height=screenSize_Format_Height(sizes)
-        NameTag=screen.blit(background, ((Width//3), (height-200)))
+      
 
     def update_surface(self):
-        dog = image_run(self.screen,self.fullscreen)
+        dog = supper_puppy.image_run()
+        NameTag=self.surface.blit(dog, (self.pos))
         return dog
     
     def draw(self, surface):
