@@ -74,15 +74,6 @@ def mouse_resaponse(screen):
         screen.blit(ball, (x_b, y_b))
         return  x_b, y_b 
         
-def image(screen, fullscreen):
-    background = pygame.image.load('Supper_puppy.png').convert_alpha()
-    if fullscreen==True:
-        sizes=pygame.display.get_desktop_sizes()
-    else:
-        sizes=[(800,600)]
-    Width=screenSize_Format_Width(sizes)
-    height=screenSize_Format_Height(sizes)
-    NameTag=screen.blit(background, ((Width//3), (height-200)))
 
 def map(screen):
     background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
@@ -95,37 +86,54 @@ def bunny_test(screen):
     NameTag=screen.blit(background, ((534), (380)))
 def move_left(cordinates):
     x_cordinate, y_cordinate=cordinates
-    new_cordinates=((x_cordinate +10), (y_cordinate))
+    new_cordinates=((x_cordinate +266), (y_cordinate))
     result=new_cordinates
     print (result)
     return result
 
 def move_right(cordinates):
     x_cordinate, y_cordinate=cordinates
-    new_cordinates=(x_cordinate -1), (y_cordinate)
+    new_cordinates=(x_cordinate -266), (y_cordinate)
     result=new_cordinates
+    print (result)
     return result
 
 #def bunnies():
    # x=5
 class supper_puppy():
 
-    def __init__(self, position=(0, 0), size=30, life=1000):
+    def __init__(self, position=(266, 490), size=30, life=1000):
         self.size = size
-        key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]: # up key
-            position= move_left(position)
-        elif key[pygame.K_RIGHT]: # up key
-            position=move_right(position)
-        else:
-            position=position
-        self.pos = position
+        self.location=position
         self.age = 0 # in milliseconds
         self.life = life # in milliseconds
         self.dead = False
         self.alpha = 255
         self.surface = self.update_surface()
- 
+   # def location(level):
+    #    if level==1:
+    #        return (266),(490)
+      #  if level==2:
+       #     return (266),(490)
+    def move_dog(self):
+        position=self.location
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT]: # up key
+            position= move_left(self.location)
+            print ("moved left")
+        elif key[pygame.K_RIGHT]: # up key
+            position=move_right(self.location)
+            print("moved right")
+        else:
+            position=position
+        self.location=position
+      #  print (self.location)
+
+
+    def image(self,screen):
+        background = pygame.image.load('Supper_puppy_01.png').convert_alpha()
+        position=self.location
+        screen.blit(background, ((position)))
       
     def update(self, dt):
         self.age += dt
@@ -144,10 +152,9 @@ class supper_puppy():
         return dog
     
     def draw(self, surface):
-        surface.blit(self.surface, self.pos)
+        surface.blit(self.surface, self.location)
 
-        x_b, y_b = pygame.mouse.get_pos()
-        print(self.pos)
+       # print(self.location)
    
         #surface.blit(self.surface, (x_b, y_b))
        # if self.dead:
@@ -155,6 +162,18 @@ class supper_puppy():
         #self.surface.set_alpha(self.alpha)
        
         
+
+def move_dog(self):
+        position=self.location
+        key = pygame.key.get_pressed()
+        if key[pygame.K_LEFT]: # up key
+
+            print ("moved left")
+        elif key[pygame.K_RIGHT]: # up key
+
+            print("moved right")
+
+
 
 
 
@@ -166,8 +185,8 @@ def main():
     resolution = (800, 600)
     screen = pygame.display.set_mode(resolution)
     #Bunnies = bunnies(resolution)
-    fix_dog = (400, 400)
-    Supper_Pupppy=supper_puppy(fix_dog)
+    fix_dog = (266, 490)
+   # Supper_Pupppy=supper_puppy(fix_dog)
     running = True
     fullscreen=False
     Level=2
@@ -175,24 +194,23 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.VIDEORESIZE:
-                sizes=pygame.display.get_desktop_sizes()
-                Width_screen=screenSize_Format_Width(sizes)
-                fullscreen=True
-        if fullscreen==True:
-            Supper_Pupppy.update(dt)
-            #Supper_Pupppy.update(dt,Width_screen,fullscreen)
-            #bunnies.update(dt,Width_screen,fullscreen)
-        else:  
-            width_normal=800
-            Supper_Pupppy.update(dt)
-            #Supper_Pupppy.update(dt, width_normal, False)
-            #bunnies.update(dt,width_normal,fullscreen)
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                  dog_left=move_left(fix_dog)
+                  fix_dog=dog_left
+                if event.key == pygame.K_RIGHT:
+                  dog_right=move_right(fix_dog)
+                  fix_dog=dog_right
+            #elif event.type == pygame.
+        Supper_Pupppy=supper_puppy(fix_dog)
+        Supper_Pupppy.update(dt)
+
         black = pygame.Color(255, 255, 255)
         screen.fill(black)
         #bunnies.draw(screen)
-        image(screen, fullscreen)
+        
         map(screen)
+        Supper_Pupppy.image(screen)
         bunnies.level_system(Level,screen)
         Supper_Pupppy.draw(screen)
         mouse_resaponse(screen)
