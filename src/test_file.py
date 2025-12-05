@@ -79,11 +79,13 @@ def map(screen, level):
     if level==1:
         background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
         screen.blit(background, ((0), (0)))
-    if level==2:
+    elif level==2:
         background = pygame.image.load('supper puppy_level2_plans.png').convert_alpha()
         screen.blit(background, ((0), (0)))
-    if level==3:
+    elif level==3:
         background = pygame.image.load('supper puppy_level3_plans.png').convert_alpha()
+        screen.blit(background, ((0), (0)))
+
 
     
 
