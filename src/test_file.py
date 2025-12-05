@@ -75,21 +75,39 @@ def mouse_resaponse(screen):
         return  x_b, y_b 
         
 
-def map(screen):
-    background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
+def map(screen, level):
+    if level==1:
+        background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
+        screen.blit(background, ((0), (0)))
+    if level==2:
+        background = pygame.image.load('supper puppy_level2_plans.png').convert_alpha()
+        screen.blit(background, ((0), (0)))
+    if level==3:
+        background = pygame.image.load('supper puppy_level3_plans.png').convert_alpha()
 
-    NameTag=screen.blit(background, ((0), (0)))
+    
 
 def bunny_test(screen):
     background = pygame.image.load('test_bunny_square.png').convert_alpha()
 
     NameTag=screen.blit(background, ((534), (380)))
-def move_left(cordinates):
+def move_left(cordinates,level):
     x_cordinate, y_cordinate=cordinates
-    if x_cordinate>=532:
-        new_cordinates=cordinates
-    else:
-        new_cordinates=((x_cordinate +266), (y_cordinate))
+    if level==1:
+        if x_cordinate>=532:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=((x_cordinate +266), (y_cordinate))
+    if level==2:
+        if x_cordinate>=532:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=((x_cordinate +266), (y_cordinate))
+    if level==3:
+        if x_cordinate>=532:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=((x_cordinate +266), (y_cordinate))
     result=new_cordinates
     print (result)
     return result
