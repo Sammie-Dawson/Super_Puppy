@@ -1,5 +1,50 @@
 import random
 import pygame
+class bunnies():
+
+    def bunny_print_no_hide(screen, bunny):
+        background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+    def bunny_print_small_hide(screen, bunny):
+        background = pygame.image.load('Bunny_small_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+    def level_system(level,screen):
+        if level==1:
+            bunny_1a=((0),(160))
+            bunny_1b=((266),(160))
+            bunny_1c=((534),(160))
+
+            bunny_2a=((0),(270))
+            bunny_2b=((266),(270))
+            bunny_2c=((534),(270))
+            
+            bunny_3a=((0),(380))
+            bunny_3b=((266),(380))
+            bunny_3c=((534),(380))
+            bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
+            for bunny in bunny_no_hide:
+                bunnies.bunny_print_no_hide(screen,bunny)
+        elif level==2:
+            bunny_1a=((0),(160))
+            bunny_1b=((266),(160))
+            bunny_1c=((534),(160))
+
+            bunny_2a=((0),(270))
+            bunny_2b=((266),(270))
+            bunny_2c=((534),(270))
+            
+            bunny_3a=((0),(380))
+            bunny_3b=((266),(380))
+            bunny_3c=((534),(380))
+            bunny_no_hide=[bunny_1a,bunny_2c,bunny_3b]
+            for bunny in bunny_no_hide:
+                bunnies.bunny_print_no_hide(screen,bunny)
+            bunny_small_hide=(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2b),(bunny_3a),(bunny_3c)
+            for bunny in bunny_small_hide:
+                bunnies.bunny_print_small_hide(screen,bunny)
+
 
 def Resize():
     pygame.display.toggle_fullscreen()
@@ -39,6 +84,15 @@ def image(screen, fullscreen):
     height=screenSize_Format_Height(sizes)
     NameTag=screen.blit(background, ((Width//3), (height-200)))
 
+def map(screen):
+    background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
+
+    NameTag=screen.blit(background, ((0), (0)))
+
+def bunny_test(screen):
+    background = pygame.image.load('test_bunny_square.png').convert_alpha()
+
+    NameTag=screen.blit(background, ((534), (380)))
 def move_left(cordinates):
     x_cordinate, y_cordinate=cordinates
     new_cordinates=((x_cordinate +10), (y_cordinate))
@@ -52,8 +106,8 @@ def move_right(cordinates):
     result=new_cordinates
     return result
 
-def bunnies():
-    x=5
+#def bunnies():
+   # x=5
 class supper_puppy():
 
     def __init__(self, position=(0, 0), size=30, life=1000):
@@ -110,12 +164,13 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     resolution = (800, 600)
-    screen = pygame.display.set_mode(resolution, pygame.RESIZABLE)
+    screen = pygame.display.set_mode(resolution)
     #Bunnies = bunnies(resolution)
     fix_dog = (400, 400)
     Supper_Pupppy=supper_puppy(fix_dog)
     running = True
     fullscreen=False
+    Level=2
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -137,7 +192,8 @@ def main():
         screen.fill(black)
         #bunnies.draw(screen)
         image(screen, fullscreen)
-
+        map(screen)
+        bunnies.level_system(Level,screen)
         Supper_Pupppy.draw(screen)
         mouse_resaponse(screen)
         pygame.display.flip()
