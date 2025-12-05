@@ -86,14 +86,31 @@ def bunny_test(screen):
     NameTag=screen.blit(background, ((534), (380)))
 def move_left(cordinates):
     x_cordinate, y_cordinate=cordinates
-    new_cordinates=((x_cordinate +266), (y_cordinate))
+    if x_cordinate>=532:
+        new_cordinates=cordinates
+    else:
+        new_cordinates=((x_cordinate +266), (y_cordinate))
     result=new_cordinates
     print (result)
     return result
 
-def move_right(cordinates):
+def move_right(cordinates,level):
     x_cordinate, y_cordinate=cordinates
-    new_cordinates=(x_cordinate -266), (y_cordinate)
+    if level==1:
+        if x_cordinate<=0:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=(x_cordinate -266), (y_cordinate)
+    if level==2:
+        if x_cordinate<=0:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=(x_cordinate -266), (y_cordinate)
+    if level==3:
+        if x_cordinate<=0:
+            new_cordinates=cordinates
+        else:
+            new_cordinates=(x_cordinate -266), (y_cordinate)
     result=new_cordinates
     print (result)
     return result
@@ -163,17 +180,6 @@ class supper_puppy():
        
         
 
-def move_dog(self):
-        position=self.location
-        key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]: # up key
-
-            print ("moved left")
-        elif key[pygame.K_RIGHT]: # up key
-
-            print("moved right")
-
-
 
 
 
@@ -196,10 +202,10 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                  dog_left=move_left(fix_dog)
+                  dog_left=move_left(fix_dog,Level)
                   fix_dog=dog_left
                 if event.key == pygame.K_RIGHT:
-                  dog_right=move_right(fix_dog)
+                  dog_right=move_right(fix_dog,Level)
                   fix_dog=dog_right
             #elif event.type == pygame.
         Supper_Pupppy=supper_puppy(fix_dog)
@@ -209,7 +215,7 @@ def main():
         screen.fill(black)
         #bunnies.draw(screen)
         
-        map(screen)
+        map(screen,Level)
         Supper_Pupppy.image(screen)
         bunnies.level_system(Level,screen)
         Supper_Pupppy.draw(screen)
