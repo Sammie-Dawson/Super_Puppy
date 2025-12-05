@@ -142,7 +142,7 @@ def bunny_test(screen):
     background = pygame.image.load('test_bunny_square.png').convert_alpha()
 
     NameTag=screen.blit(background, ((534), (380)))
-def move_left(cordinates,level):
+def move_right(cordinates,level):
     x_cordinate, y_cordinate=cordinates
     if level==1:
         if x_cordinate>=532:
@@ -155,15 +155,15 @@ def move_left(cordinates,level):
         else:
             new_cordinates=((x_cordinate +266), (y_cordinate))
     if level==3:
-        if x_cordinate>=532:
+        if x_cordinate>=665:
             new_cordinates=cordinates
         else:
-            new_cordinates=((x_cordinate +266), (y_cordinate))
+            new_cordinates=((x_cordinate +133), (y_cordinate))
     result=new_cordinates
     print (result)
     return result
 
-def move_right(cordinates,level):
+def move_left(cordinates,level):
     x_cordinate, y_cordinate=cordinates
     if level==1:
         if x_cordinate<=0:
@@ -179,7 +179,7 @@ def move_right(cordinates,level):
         if x_cordinate<=0:
             new_cordinates=cordinates
         else:
-            new_cordinates=(x_cordinate -266), (y_cordinate)
+            new_cordinates=(x_cordinate -133), (y_cordinate)
     result=new_cordinates
     print (result)
     return result
@@ -196,11 +196,7 @@ class supper_puppy():
         self.dead = False
         self.alpha = 255
         self.surface = self.update_surface()
-   # def location(level):
-    #    if level==1:
-    #        return (266),(490)
-      #  if level==2:
-       #     return (266),(490)
+
     def move_dog(self):
         position=self.location
         key = pygame.key.get_pressed()
@@ -213,7 +209,7 @@ class supper_puppy():
         else:
             position=position
         self.location=position
-      #  print (self.location)
+
 
 
     def image(self,screen):
@@ -226,12 +222,6 @@ class supper_puppy():
         if self.age > self.life:
             self.dead = True
         self.alpha = 255 * (1 - (self.age / self.life))
-    
-    #def image_run():
-        
-       # background = pygame.image.load('Supper_puppy.png').convert_alpha()
-
-      
 
     def update_surface(self):
         dog = pygame.image.load('Supper_puppy.png').convert_alpha()
@@ -240,12 +230,42 @@ class supper_puppy():
     def draw(self, surface):
         surface.blit(self.surface, self.location)
 
-       # print(self.location)
-   
-        #surface.blit(self.surface, (x_b, y_b))
-       # if self.dead:
-         #      return
-        #self.surface.set_alpha(self.alpha)
+
+class Level3_supper_puppy():
+
+    def __init__(self, position=(266, 490), size=30, life=1000):
+        self.size = size
+        self.location=position
+        self.age = 0 # in milliseconds
+        self.life = life # in milliseconds
+        self.dead = False
+        self.alpha = 255
+        self.surface = self.update_surface()
+
+ 
+
+
+
+    def image(self,screen):
+        background = pygame.image.load('Supper_puppy_01.png').convert_alpha()
+        position=self.location
+        screen.blit(background, ((position)))
+      
+    def update(self, dt):
+        self.age += dt
+        if self.age > self.life:
+            self.dead = True
+        self.alpha = 255 * (1 - (self.age / self.life))
+
+    def update_surface(self):
+        dog = pygame.image.load('Supper_puppy_level3.png').convert_alpha()
+        return dog
+    
+    def draw(self, surface):
+        surface.blit(self.surface, self.location)
+
+  
+  
        
         
 
@@ -277,7 +297,12 @@ def main():
                   dog_right=move_right(fix_dog,Level)
                   fix_dog=dog_right
             #elif event.type == pygame.
-        Supper_Pupppy=supper_puppy(fix_dog)
+        if Level==1:   
+            Supper_Pupppy=supper_puppy(fix_dog)
+        elif Level==2:
+            Supper_Pupppy=supper_puppy(fix_dog)
+        elif Level==3:
+            Supper_Pupppy=Level3_supper_puppy(fix_dog)
         Supper_Pupppy.update(dt)
 
         black = pygame.Color(255, 255, 255)
