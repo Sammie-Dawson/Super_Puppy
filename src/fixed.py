@@ -62,8 +62,8 @@ class bunnies():
         self.level3_bunny_small_hide=[]
         self.level3_bunny_big_hide=[]
         self.L1gA_scare=False
-        self.L1gA_scare=False
-        self.L1gA_scare=False
+        self.L1gB_scare=False
+        self.L1gC_scare=False
 
     def bunny_print_no_hide(screen, bunny):
         background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
@@ -120,18 +120,25 @@ class bunnies():
             self.level1_bunny_no_hide_gA=[(bunny_2a),(bunny_3a)]
             self.level1_bunny_no_hide_gB=[(bunny_1b),(bunny_3b)]
             self.level1_bunny_no_hide_gC=[(bunny_1c),(bunny_2c),(bunny_3c)]
-            #while self.L1gA_scare==False:
-            for bunny in self.level1_bunny_no_hide_gA:
-                bunnies.bunny_print_no_hide(screen,bunny)
-                print(bunny)
-            #while self.L1gB_scare==False:
-            for bunny in self.level1_bunny_no_hide_gB:
-                bunnies.bunny_print_no_hide(screen,bunny)
-                print(bunny)
-            #while self.L1gC_scare==False:
-            for bunny in self.level1_bunny_no_hide_gC:
-                bunnies.bunny_print_no_hide(screen,bunny)
-                print(bunny)
+            if self.L1gA_scare==False:
+                for bunny in self.level1_bunny_no_hide_gA:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+                   # print(bunny)
+            elif self.L1gA_scare==True:
+                print ("row a dead?")
+
+            if self.L1gB_scare==False:
+                for bunny in self.level1_bunny_no_hide_gB:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+                    #print(bunny)
+            elif self.L1gB_scare==True:
+                print ("row b dead?")
+            if self.L1gC_scare==False:
+                for bunny in self.level1_bunny_no_hide_gC:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+                   # print(bunny)
+            elif self.L1gC_scare==True:
+                print ("row C dead?")
             #self.level1_bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
             #for bunny in self.level1_bunny_no_hide:
                 #bunnies.bunny_print_no_hide(screen,bunny)
@@ -310,19 +317,19 @@ class Level3_supper_puppy():
         surface.blit(self.surface, self.location)
 
 def level_determine(dt):
-    if dt<=2000:
+    if dt<=20000:
         level=1
         print ("level 1")
-    elif (dt>=2001 and dt<=4000):
+    elif (dt>=20001 and dt<=40000):
         level=2
         print ("level 2")
-    elif dt>=4001 and dt<=6000:
+    elif dt>=40001 and dt<=60000:
         level=3
         print ("level 3")
     else:
         level=4
         print ("game over")
-    print (dt)
+    #print (dt)
     return level
 
 def main():
@@ -355,10 +362,12 @@ def main():
                   fix_dog=dog_right
                 if event.key == pygame.K_UP:
                     Supper_Bunny.scare(fix_dog, Level)
+                    print("SCARE")
             #elif event.type == pygame.
         Level=level_determine(Time)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
+            Supper_Bunny=bunnies()
 
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
