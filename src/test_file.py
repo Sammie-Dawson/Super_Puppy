@@ -45,7 +45,7 @@ def mouse_resaponse(screen):
 
 class bunny_cordinates():
 
-    def __init__(self, pos=(0,0), size=1, life=360):
+    def __init__(self, pos=(200,200), size=30, life=360):
         self.pos= pos
         self.size = size
         self.life = life
@@ -66,14 +66,14 @@ class bunny_cordinates():
             bunny_3c=((534),(380))
             bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
             for bunny in bunny_no_hide:
-                particle = Bunny(bunny, size=self.size, life=self.life)
+                particle = supper_Bunny(bunny, size=self.size, life=self.life)
                 self.particles.insert(0, particle)
             print(self.particles)
 
     def update(self, dt, level):
         self._bunny_tracker(level)
-        self._update_particles(dt)
-        self._update_pos()
+        self._update_particles(dt, level)
+
 
     def _update_particles(self, dt):
         for idx, particle in enumerate(self.particles):
@@ -81,14 +81,10 @@ class bunny_cordinates():
             if particle.dead:
                 del self.particles[idx]
 
-    def _update_particles(self, dt):
+    def _update_particles(self, dt, level):
         for particle in self.particles:
             particle.update(dt)
 
-    def _update_pos(self):
-        x, y = self.pos
-        
-        self.pos = (x, y)
     
     def draw(self, surface):
         for particle in self.particles:
@@ -125,9 +121,9 @@ class Bunny():
     def update_surface(self):
         surf = pygame.Surface((self.size*268, self.size*110))
        # background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
-
+        YELLOW=pygame.Color(252, 194, 0)
        # surf.blit(background, (0,0))
-        
+        color=surf.fill(YELLOW)
         
         return surf
     
@@ -137,7 +133,30 @@ class Bunny():
         self.surface.set_alpha(self.alpha)
         surface.blit(self.surface, self.pos)
 
+class supper_Bunny():
+
+    def __init__(self, position=(100, 500), size=30, life=1000):
+        self.size = size
+        self.location=position
+        self.age = 0 # in milliseconds
+        self.life = life # in milliseconds
+        self.dead = False
+        self.alpha = 255
+        self.surface = self.update_surface()
+
+      
+    def update(self, dt):
+        self.age += dt
+        if self.age > self.life:
+            self.dead = True
+        self.alpha = 255 * (1 - (self.age / self.life))
+
+    def update_surface(self):
+        dog = pygame.image.load('Bunny_no_hide.png').convert_alpha()
+        return dog
     
+    def draw(self, surface):
+        surface.blit(self.surface, self.location)
 
 def bunny_test(screen):
     background = pygame.image.load('test_bunny_square.png').convert_alpha()
@@ -185,8 +204,6 @@ def move_left(cordinates,level):
     print (result)
     return result
 
-#def bunnies():
-   # x=5
 class supper_puppy():
 
     def __init__(self, position=(266, 490), size=30, life=1000):
@@ -303,10 +320,17 @@ def main():
             #elif event.type == pygame.
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
+            Supper_Bunny=supper_Bunny(resolution)
+
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
+            Supper_Bunny=supper_Bunny((266, 0))
+
         elif Level==3:
             Supper_Pupppy=Level3_supper_puppy(fix_dog)
+            Supper_Bunny=supper_Bunny(fix_dog)
+
+        Supper_Bunny.update(dt)
         Supper_Pupppy.update(dt)
 
         black = pygame.Color(255, 255, 255)
@@ -317,14 +341,15 @@ def main():
         Supper_Pupppy.image(screen)
       #  bunnies.level_system(Level,screen)
       
-        Bunny_cordinates_up=bunny_cordinates()
+        Bunny_cordinates_up=bunny_cordinates(resolution)
         Bunny_cordinates_up.update(dt, Level)
-        Bunny_cordinates_draw=bunny_cordinates()
+        Bunny_cordinates_draw=bunny_cordinates(resolution)
         Bunny_cordinates_draw.draw(screen)
         Supper_Pupppy.draw(screen)
+        Supper_Bunny.draw(screen)
         mouse_resaponse(screen)
         pygame.display.flip()
-        dt = clock.tick(12)
+        dt = clock.tick(1)
     pygame.quit()
 
 if __name__ == "__main__":
