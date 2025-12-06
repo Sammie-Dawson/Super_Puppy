@@ -10,6 +10,11 @@ class bunnies():
         self.level3_bunny_no_hide=[]
         self.level3_bunny_small_hide=[]
         self.level3_bunny_big_hide=[]
+        self.L1gA_scare=False
+        self.L1gA_scare=False
+        self.L1gA_scare=False
+
+
 
 
     def bunny_print_no_hide(screen, bunny):
@@ -37,10 +42,22 @@ class bunnies():
 
         NameTag=screen.blit(background, (bunny))
 
-    def scare(cordinates_dog):
-        if cordinates of dog  x=0 remove group a from 
-    def level_system(self,level,screen):
+    def scare(self, cordinates_dog, level):
+        x_cordinate,y_cordinate=cordinates_dog
+       # if cordinates of dog  x=0 remove group a from 
         if level==1:
+            if x_cordinate==0:
+                self.L1gA_scare=True
+            elif x_cordinate==266:
+                self.L1gB_scare=True
+            elif x_cordinate==534:
+                self.L1gC_scare=True
+            else:
+                print("level 1 group not detected")
+    
+
+    def level_system(self,level,screen):
+        while level==1:
             bunny_1a=((0),(160))
             bunny_1b=((266),(160))
             bunny_1c=((534),(160))
@@ -52,10 +69,26 @@ class bunnies():
             bunny_3a=((0),(380))
             bunny_3b=((266),(380))
             bunny_3c=((534),(380))
-            self.level1_bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
-            for bunny in self.level1_bunny_no_hidebunny_no_hide:
-                bunnies.bunny_print_no_hide(screen,bunny)
-        elif level==3:
+            while self.L1gA_scare==False:
+                    for bunny in self.level1_bunny_no_hide_gA:
+                        bunnies.bunny_print_no_hide(screen,bunny)
+                        print(bunny)
+            self.level1_bunny_no_hide_gA=[(bunny_2a),(bunny_3a)]
+            self.level1_bunny_no_hide_gB=[(bunny_1b),(bunny_3b)]
+            self.level1_bunny_no_hide_gC=[(bunny_1c)(bunny_2c),(bunny_3c)]
+            while self.L1gB_scare==False:
+                    for bunny in self.level1_bunny_no_hide_gB:
+                        bunnies.bunny_print_no_hide(screen,bunny)
+                        print(bunny)
+            while self.L1gC_scare==False:
+                    for bunny in self.level1_bunny_no_hide_gC:
+                        bunnies.bunny_print_no_hide(screen,bunny)
+                        print(bunny)
+            #self.level1_bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
+            #for bunny in self.level1_bunny_no_hide:
+                #bunnies.bunny_print_no_hide(screen,bunny)
+                #print(bunny)
+        while level==3:
             bunny_1a=((0),(160))
             bunny_1b=((133),(160))
             bunny_1c=((266),(160))
@@ -86,7 +119,7 @@ class bunnies():
             self.level3_bunny_big_hide=[bunny_1d,bunny_2a,bunny_2c,bunny_2e,bunny_3b,bunny_3d,bunny_3f]
             for bunny in self.level3_bunny_big_hide:
                 bunnies.level3_bunny_print_big_hide(screen,bunny)
-        elif level==2:
+        while level==2:
             bunny_1a=((0),(160))
             bunny_1b=((266),(160))
             bunny_1c=((534),(160))

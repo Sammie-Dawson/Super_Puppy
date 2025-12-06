@@ -32,7 +32,7 @@ def mouse_resaponse(screen):
         
 
 def map(screen, level):
-    while level<4:
+    
         if level==1:
             background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
             screen.blit(background, ((0), (0)))
@@ -42,17 +42,68 @@ def map(screen, level):
         elif level==3:
             background = pygame.image.load('supper puppy_level3_plan.png').convert_alpha()
             screen.blit(background, ((0), (0)))
+        elif level==4:
+            print("level 4 map!")
+        else:
+            print("something wrong with map")
 
 
-class bunny_cordinates():
 
-    def __init__(self, pos=(200,200), size=30, life=360):
-        self.pos= pos
-        self.size = size
-        self.life = life
-        self.particles = []
+class bunnies():
+    def __init__(self):
+
+        #self.surface = self.update_surface()
+        self.level1_bunny_no_hide=[]
+
+        self.level2_bunny_no_hide=[]
+        self.level2_bunny_small_hide=[]
+
+        self.level3_bunny_no_hide=[]
+        self.level3_bunny_small_hide=[]
+        self.level3_bunny_big_hide=[]
+        self.L1gA_scare=False
+        self.L1gA_scare=False
+        self.L1gA_scare=False
+
+    def bunny_print_no_hide(screen, bunny):
+        background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+
+    def bunny_print_small_hide(screen, bunny):
+        background = pygame.image.load('Bunny_small_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
     
-    def _bunny_tracker(self,level):
+    def level3_bunny_print_no_hide(screen, bunny):
+        background = pygame.image.load('level3_Bunny_no_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+
+    def level3_bunny_print_small_hide(screen, bunny):
+        background = pygame.image.load('level3_Bunny_small_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+
+    def level3_bunny_print_big_hide(screen, bunny):
+        background = pygame.image.load('level3_Bunny_big_hide.png').convert_alpha()
+
+        NameTag=screen.blit(background, (bunny))
+
+    def scare(self, cordinates_dog, level):
+        x_cordinate,y_cordinate=cordinates_dog
+       # if cordinates of dog  x=0 remove group a from 
+        if level==1:
+            if x_cordinate==0:
+                self.L1gA_scare=True
+            elif x_cordinate==266:
+                self.L1gB_scare=True
+            elif x_cordinate==534:
+                self.L1gC_scare=True
+            else:
+                print("level 1 group not detected")
+    
+    def level_system(self,level,screen):
         if level==1:
             bunny_1a=((0),(160))
             bunny_1b=((266),(160))
@@ -65,104 +116,81 @@ class bunny_cordinates():
             bunny_3a=((0),(380))
             bunny_3b=((266),(380))
             bunny_3c=((534),(380))
-            bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
-            for bunny in bunny_no_hide:
-                particle = supper_Bunny(bunny, size=self.size, life=self.life)
-                self.particles.insert(0, particle)
-            #print(self.particles)
 
-    def update(self, dt, level):
-        self._bunny_tracker(level)
-        self._update_particles(dt, level)
+            self.level1_bunny_no_hide_gA=[(bunny_2a),(bunny_3a)]
+            self.level1_bunny_no_hide_gB=[(bunny_1b),(bunny_3b)]
+            self.level1_bunny_no_hide_gC=[(bunny_1c),(bunny_2c),(bunny_3c)]
+            #while self.L1gA_scare==False:
+            for bunny in self.level1_bunny_no_hide_gA:
+                bunnies.bunny_print_no_hide(screen,bunny)
+                print(bunny)
+            #while self.L1gB_scare==False:
+            for bunny in self.level1_bunny_no_hide_gB:
+                bunnies.bunny_print_no_hide(screen,bunny)
+                print(bunny)
+            #while self.L1gC_scare==False:
+            for bunny in self.level1_bunny_no_hide_gC:
+                bunnies.bunny_print_no_hide(screen,bunny)
+                print(bunny)
+            #self.level1_bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
+            #for bunny in self.level1_bunny_no_hide:
+                #bunnies.bunny_print_no_hide(screen,bunny)
+                #print(bunny)
+        if level==3:
+            bunny_1a=((0),(160))
+            bunny_1b=((133),(160))
+            bunny_1c=((266),(160))
+            bunny_1d=((399),(160))
+            bunny_1e=((534),(160))
+            bunny_1f=((667),(160))
 
+            bunny_2a=((0),(270))
+            bunny_2b=((133),(270))
+            bunny_2c=((266),(270))
+            bunny_2d=((399),(270))
+            bunny_2e=((534),(270))
+            bunny_2f=((667),(270))
+            
+            bunny_3a=((0),(380))
+            bunny_3b=((133),(380))
+            bunny_3c=((266),(380))
+            bunny_3d=((399),(380))
+            bunny_3e=((534),(380))
+            bunny_3f=((667),(380))
 
-    def _update_particles(self, dt):
-        for idx, particle in enumerate(self.particles):
-            particle.update(dt)
-            if particle.dead:
-                del self.particles[idx]
+            self.level3_bunny_no_hide=[bunny_1a,bunny_1f,bunny_2f,bunny_3c]
+            for bunny in self.level3_bunny_no_hide:
+                bunnies.level3_bunny_print_no_hide(screen,bunny)
+            self.level3_bunny_small_hide=(bunny_1b),(bunny_1c),(bunny_1e),(bunny_2b),(bunny_2d),(bunny_3a),(bunny_3e)
+            for bunny in self.level3_bunny_small_hide:
+                bunnies.level3_bunny_print_small_hide(screen,bunny)
+            self.level3_bunny_big_hide=[bunny_1d,bunny_2a,bunny_2c,bunny_2e,bunny_3b,bunny_3d,bunny_3f]
+            for bunny in self.level3_bunny_big_hide:
+                bunnies.level3_bunny_print_big_hide(screen,bunny)
+        if level==2:
+            bunny_1a=((0),(160))
+            bunny_1b=((266),(160))
+            bunny_1c=((534),(160))
 
-    def _update_particles(self, dt, level):
-        for particle in self.particles:
-            particle.update(dt)
-
-    
-    def draw(self, surface):
-        for particle in self.particles:
-            particle.draw(surface)
-
-
-class Bunny():
-
-    def __init__(self, pos=(0, 0), size=10, life=30000):
-        self.pos = pos
-        self.size = size
-
-        self.age = 0 # in milliseconds
-        self.life = life # in milliseconds
-        self.dead = False
-        self.alpha = 255
-        self.surface = self.update_surface()
-  
-    def scare(self,dog_pos):
-        x_cordinate,y_cordinate=dog_pos
-        my_x_cordinate,my_y_cordinate=self.pos
-        if my_x_cordinate==x_cordinate:
-            self.dead=True
-        else:
-            self.dead=False
-
-
-    def update(self, dt):
-        self.age += dt
-        if self.age > self.life:
-            self.dead = True
-    #    self.alpha = 255 * (1 - (self.age / self.life))
-
-    def update_surface(self):
-        surf = pygame.Surface((self.size*268, self.size*110))
-       # background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
-        YELLOW=pygame.Color(252, 194, 0)
-       # surf.blit(background, (0,0))
-        color=surf.fill(YELLOW)
-        
-        return surf
-    
-    def draw(self, surface):
-        if self.dead:
-            return
-        self.surface.set_alpha(self.alpha)
-        surface.blit(self.surface, self.pos)
-
-class supper_Bunny():
-
-    def __init__(self, position=(100, 500), size=30, life=1000):
-        self.size = size
-        self.location=position
-        self.age = 0 # in milliseconds
-        self.life = life # in milliseconds
-        self.dead = False
-        self.alpha = 255
-        self.surface = self.update_surface()
-
-      
-    def update(self, dt):
-        self.age += dt
-        if self.age > self.life:
-            self.dead = True
-        self.alpha = 255 * (1 - (self.age / self.life))
-
-    def update_surface(self):
-        dog = pygame.image.load('Bunny_no_hide.png').convert_alpha()
-        return dog
-    
-    def draw(self, surface):
-        surface.blit(self.surface, self.location)
+            bunny_2a=((0),(270))
+            bunny_2b=((266),(270))
+            bunny_2c=((534),(270))
+            
+            bunny_3a=((0),(380))
+            bunny_3b=((266),(380))
+            bunny_3c=((534),(380))
+            self.level2_bunny_no_hide=[bunny_1a,bunny_2c,bunny_3b]
+            for bunny in self.level2_bunny_no_hide:
+                bunnies.bunny_print_no_hide(screen,bunny)
+            self.level2_bunny_small_hide=(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2b),(bunny_3a),(bunny_3c)
+            for bunny in self.level2_bunny_small_hide:
+                bunnies.bunny_print_small_hide(screen,bunny)
 
 def bunny_test(screen):
     background = pygame.image.load('test_bunny_square.png').convert_alpha()
 
     NameTag=screen.blit(background, ((534), (380)))
+
 def move_right(cordinates,level):
     x_cordinate, y_cordinate=cordinates
     if level==1:
@@ -180,6 +208,9 @@ def move_right(cordinates,level):
             new_cordinates=cordinates
         else:
             new_cordinates=((x_cordinate +133), (y_cordinate))
+    if level==4:
+        new_cordinates=(0),(0)
+
     result=new_cordinates
     print (result)
     return result
@@ -207,9 +238,6 @@ def move_left(cordinates,level):
     print (result)
     return result
 
-
-
-
 class supper_puppy():
 
     def __init__(self, position=(266, 490), size=30, life=1000):
@@ -234,8 +262,6 @@ class supper_puppy():
             position=position
         self.location=position
 
-
-
     def image(self,screen):
         background = pygame.image.load('Supper_puppy_01.png').convert_alpha()
         position=self.location
@@ -253,7 +279,6 @@ class supper_puppy():
     
     def draw(self, surface):
         surface.blit(self.surface, self.location)
-
 
 class Level3_supper_puppy():
 
@@ -284,7 +309,6 @@ class Level3_supper_puppy():
     def draw(self, surface):
         surface.blit(self.surface, self.location)
 
-
 def level_determine(dt):
     if dt<=2000:
         level=1
@@ -301,13 +325,6 @@ def level_determine(dt):
     print (dt)
     return level
 
-  
-       
-        
-
-
-
-
 def main():
     pygame.init()
     pygame.display.set_caption("Supper Puppy")
@@ -318,7 +335,7 @@ def main():
     #Bunnies = bunnies(resolution)
     fix_dog = (266, 490)
     fix_bunny=(0, 380)
-
+    Supper_Bunny=bunnies()
    # Supper_Pupppy=supper_puppy(fix_dog)
     running = True
     fullscreen=False
@@ -337,39 +354,31 @@ def main():
                   dog_right=move_right(fix_dog,Level)
                   fix_dog=dog_right
                 if event.key == pygame.K_UP:
-                    bunny=Bunny(fix_dog)
-                    bunny.scare(fix_dog)
+                    Supper_Bunny.scare(fix_dog, Level)
             #elif event.type == pygame.
         Level=level_determine(Time)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
-            Supper_Bunny=supper_Bunny(fix_bunny)
 
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
-            Supper_Bunny=supper_Bunny(fix_bunny)
-
+            Supper_Bunny=bunnies()
         elif Level==3:
             Supper_Pupppy=Level3_supper_puppy(fix_dog)
-            Supper_Bunny=supper_Bunny(fix_bunny)
+            Supper_Bunny=bunnies()
 
-        Supper_Bunny.update(dt)
         Supper_Pupppy.update(dt)
 
         BLACK = pygame.Color(0, 0, 0)
         screen.fill(BLACK)
-        #bunnies.draw(screen)
+       # bunnies.draw(screen)
         
-        #map(screen,Level)
+        map(screen,Level)
         Supper_Pupppy.image(screen)
-      #  bunnies.level_system(Level,screen)
+        Supper_Bunny.level_system(Level,screen)
       
-        Bunny_cordinates_up=bunny_cordinates(resolution)
-        Bunny_cordinates_up.update(dt, Level)
-        Bunny_cordinates_draw=bunny_cordinates(resolution)
-        Bunny_cordinates_draw.draw(screen)
         Supper_Pupppy.draw(screen)
-        Supper_Bunny.draw(screen)
+        #Supper_Bunny.draw(screen)
         mouse_resaponse(screen)
         pygame.display.flip()
         
