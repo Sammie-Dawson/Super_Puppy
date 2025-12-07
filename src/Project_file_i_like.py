@@ -20,9 +20,15 @@ def screenSize_Format_Height(sizes):
     return result
 
  
-        
+def pause_screen(screen):
+    background = pygame.image.load('pause_screen.png').convert_alpha()
+    screen.blit(background, ((0), (0)))
 
-def map(screen, level):
+def reset_screen(screen):
+    background = pygame.image.load('reset_screen.png').convert_alpha()
+    screen.blit(background, ((0), (0)))
+
+def map(screen, level, win):
     
         if level==0:
             background = pygame.image.load('introduction_to_supper_puppy.png').convert_alpha()
@@ -38,6 +44,12 @@ def map(screen, level):
             background = pygame.image.load('supper puppy_level3_plan.png').convert_alpha()
             screen.blit(background, ((0), (0)))
         elif level==4:
+            if win==True:
+                 print("you win!")
+            elif win==False:
+                 print("you lost")
+            else:
+                 print("win condition not detected")
             print("level 4 map!")
         else:
             print("something wrong with map")
@@ -70,7 +82,7 @@ class bunnies():
         self.no_hide_bunny_count=0
         self.small_hide_bunny_count=0
         self.big_hide_bunny_count=0
-        self.Total_bunny_count=(self.no_hide_bunny_count)+(self.small_hide_bunny_count)+(self.big_hide_bunny_count)
+        self.Total_bunny_count=0
         
         #self.surface = self.update_surface()
        
@@ -157,6 +169,19 @@ class bunnies():
         self.L3gE_BH_scare=0  #1
         self.L3gF_BH_scare=0  #1
   
+    def win_condition(self):
+        self.Total_bunny_count=(self.no_hide_bunny_count)+(self.small_hide_bunny_count)+(self.big_hide_bunny_count)
+
+        if self.Total_bunny_count<=28:
+              win=False
+        elif self.Total_bunny_count>=28:
+             win=True
+        else:
+             win=False
+             print("something wrong with win condition def")
+        print (self.Total_bunny_count)
+        return win
+
     def bunny_print_no_hide(screen, bunny):
         background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
 
@@ -412,6 +437,7 @@ class bunnies():
             print( f"{self.no_hide_bunny_count} no hide counter ")
             print( f"{self.small_hide_bunny_count} small hide counter ")
             print( f"{self.big_hide_bunny_count} big hide counter ")
+            print( f"{self.Total_bunny_count} Total counter ")
         
     def scare(self, cordinates_dog, level, powerup, screen):
         x_cordinate,y_cordinate=cordinates_dog
@@ -505,7 +531,8 @@ class bunnies():
             bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gC_SH_scare,self.level2_bunny_small_hide_gC, screen)
 
     def level_system(self,level,screen):
-        Print_gui(self.no_hide_bunny_count,self.small_hide_bunny_count,self.big_hide_bunny_count, screen)
+        if level>0:
+            Print_gui(self.no_hide_bunny_count,self.small_hide_bunny_count,self.big_hide_bunny_count, screen)
 
         if level==1:
             bunny_1a=((0),(160))
@@ -616,6 +643,8 @@ class bunnies():
                 #for bunny in self.level2_bunny_small_hide:
                    # bunnies.bunny_print_small_hide(screen,bunny)
             bunnies.Level_2_kill_system(self,screen)
+        #if level==4:
+          #   print (f"total bunnies {self.Total_bunny_count}")
 
 
 
@@ -757,13 +786,13 @@ def level_determine(pause,dt):
         if dt<=10000:
             level=0
             #print ("level 1")
-        elif (dt>=10001 and dt<=20000):
+        elif (dt>=10001 and dt<=15000):
             level=1
         # print ("level 2")
-        elif dt>=20001 and dt<=40000:
+        elif dt>=15001 and dt<=25000:
             level=2
             #print ("level 3")
-        elif dt>=40001 and dt<=60000:
+        elif dt>=25001 and dt<=30000:
             level=3
         else:
             level=4
@@ -771,6 +800,11 @@ def level_determine(pause,dt):
     #print (dt)
     return level
 
+
+def level_timer(time):
+    sec=time//1000
+
+    
 
 
 def main():
@@ -789,14 +823,15 @@ def main():
     running = True
     fullscreen=False
     Level=level_determine(Pause, dt)
-    #Level=1
+    #Level=3
     powerups=3
     powerup=False
-    
+    start_time = 0
+    win=False
     
     while running:
         
-        Time=pygame.time.get_ticks()
+        
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -817,22 +852,36 @@ def main():
                         powerup=True
                         powerups-=1
                         print("Powerup")
-                    Supper_Bunny.scare(fix_dog, Level,powerup, screen)
-                    
+                        Supper_Bunny.scare(fix_dog, Level,powerup, screen)
+                if event.key == pygame.K_p:
+                    print(f"delay start {elapsed_milliseconds}")
+                    pause_screen(screen)
+                    pygame.display.flip()
+                    pygame.time.delay(5000)
+                    print(f"delay end {elapsed_milliseconds}")
                     #scare=True
+                if event.key == pygame.K_r:
+                    print(elapsed_milliseconds//1000)
+                    reset_screen(screen)
+                    pygame.display.flip()
+                    pygame.time.delay(5000)
+                    start_time = pygame.time.get_ticks()
+                    print(elapsed_milliseconds//1000)
             #elif event.type == pygame.
-        Level=level_determine(Pause, Time)
+        current_time=pygame.time.get_ticks()
+        elapsed_milliseconds = current_time - start_time
+        Level=level_determine(Pause, elapsed_milliseconds)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
-            print(powerups)
-
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
         elif Level==3:
             Supper_Pupppy=Level3_supper_puppy(fix_dog)
+        elif Level==4:
+            Supper_Pupppy=supper_puppy(fix_dog)
+            win=Supper_Bunny.win_condition()
         else:
             Supper_Pupppy=supper_puppy(fix_dog)
-            print(f'before {powerups}')
 
         Supper_Pupppy.update(dt)
 
@@ -840,7 +889,7 @@ def main():
         screen.fill(BLACK)
        # bunnies.draw(screen)
         
-        map(screen,Level)
+        map(screen,Level, win)
         
         Supper_Bunny.level_system(Level,screen)
         if scare==True:
