@@ -619,9 +619,10 @@ def main():
    # Supper_Pupppy=supper_puppy(fix_dog)
     running = True
     fullscreen=False
-    Level=level_determine(dt)
-    #Level=2
+    #Level=level_determine(dt)
+    Level=3
     powerup=False
+    powerups=3
     while running:
         Time=pygame.time.get_ticks()
         for event in pygame.event.get():
@@ -639,12 +640,15 @@ def main():
                     print("SCARE")
                     #scare=True
                 if event.key == pygame.K_DOWN:
-                    powerup=True
+                    if powerups>0:
+                        powerup=True
+                        powerups-=1
+                        print("Powerup")
                     Supper_Bunny.scare(fix_dog, Level,powerup)
-                    print("SCARE")
+                    
                     #scare=True
             #elif event.type == pygame.
-        Level=level_determine(Time)
+        #Level=level_determine(Time)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
 
