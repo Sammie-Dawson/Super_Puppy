@@ -56,7 +56,15 @@ class bunnies():
         self.level1_bunny_no_hide=[]
 
         self.level2_bunny_no_hide=[]
+        self.level2_bunny_no_hide_gA=[]
+        self.level2_bunny_no_hide_gB=[]
+        self.level2_bunny_no_hide_gC=[]
+
         self.level2_bunny_small_hide=[]
+        self.level2_bunny_small_hide_gA=[]
+        self.level2_bunny_small_hide_gB=[]
+        self.level2_bunny_small_hide_gC=[]
+
 
         self.level3_bunny_no_hide=[]
         self.level3_bunny_small_hide=[]
@@ -65,10 +73,39 @@ class bunnies():
         self.L1gB_scare=False
         self.L1gC_scare=False
 
+        self.L2gA_NH_scare=0
+        self.L2gB_NH_scare=0
+        self.L2gC_NH_scare=0
+
+        
+
     def bunny_print_no_hide(screen, bunny):
         background = pygame.image.load('Bunny_no_hide.png').convert_alpha()
 
         NameTag=screen.blit(background, (bunny))
+    
+    def grass_overwrite(self, screen,dog_cordinates,level):
+        x_cordinate,y_cordinate=dog_cordinates
+
+        if level==1:
+            if x_cordinate==0 and self.L1gA_scare==1:
+                background = pygame.image.load('grass.png').convert_alpha()
+
+                NameTag=screen.blit(background, (0,0))
+
+            elif x_cordinate==266 and self.L1gB_scare==1:
+                background = pygame.image.load('grass.png').convert_alpha()
+
+                NameTag=screen.blit(background, (266,0))
+
+            elif x_cordinate==532 and self.L1gC_scare==1:
+                background = pygame.image.load('grass.png').convert_alpha()
+
+                NameTag=screen.blit(background, (532,0))
+            else:
+                print ("no grass")
+            print (x_cordinate)
+            print(self.L1gA_scare)
 
     def bunny_print_small_hide(screen, bunny):
         background = pygame.image.load('Bunny_small_hide.png').convert_alpha()
@@ -95,13 +132,32 @@ class bunnies():
        # if cordinates of dog  x=0 remove group a from 
         if level==1:
             if x_cordinate==0:
-                self.L1gA_scare=True
+                self.L1gA_scare+=1
+                print("L1gA")
             elif x_cordinate==266:
-                self.L1gB_scare=True
-            elif x_cordinate==534:
-                self.L1gC_scare=True
+                self.L1gB_scare+=1
+                print("L1gB")
+            elif x_cordinate==532:
+                self.L1gC_scare+=1
+                print("L1gB")
             else:
                 print("level 1 group not detected")
+            print(self.L1gA_scare)
+        if level==2:
+            if x_cordinate==0:
+                self.L2gA_NH_scare+=1
+                self.L2gA_SH_scare+=1
+                print("L2gA")
+            elif x_cordinate==266:
+                self.L2gB_NH_scare+=1
+                self.L2gB_SH_scare+=1
+                print("L2gB")
+            elif x_cordinate==532:
+                self.L1gC_scare+=1
+                print("L1gB")
+            else:
+                print("level 1 group not detected")
+            print(self.L1gA_scare)
     
     def level_system(self,level,screen):
         if level==1:
@@ -124,25 +180,19 @@ class bunnies():
                 for bunny in self.level1_bunny_no_hide_gA:
                     bunnies.bunny_print_no_hide(screen,bunny)
                    # print(bunny)
-            elif self.L1gA_scare==True:
-                print ("row a dead?")
+            #elif self.L1gA_scare==True:
+             #   print ("row a dead?")
 
             if self.L1gB_scare==False:
                 for bunny in self.level1_bunny_no_hide_gB:
                     bunnies.bunny_print_no_hide(screen,bunny)
                     #print(bunny)
-            elif self.L1gB_scare==True:
-                print ("row b dead?")
+            #elif self.L1gB_scare==True:
+              #  print ("row b dead?")
             if self.L1gC_scare==False:
                 for bunny in self.level1_bunny_no_hide_gC:
                     bunnies.bunny_print_no_hide(screen,bunny)
-                   # print(bunny)
-            elif self.L1gC_scare==True:
-                print ("row C dead?")
-            #self.level1_bunny_no_hide=[(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2c),(bunny_3a),(bunny_3b),(bunny_3c)]
-            #for bunny in self.level1_bunny_no_hide:
-                #bunnies.bunny_print_no_hide(screen,bunny)
-                #print(bunny)
+                 
         if level==3:
             bunny_1a=((0),(160))
             bunny_1b=((133),(160))
@@ -186,12 +236,36 @@ class bunnies():
             bunny_3a=((0),(380))
             bunny_3b=((266),(380))
             bunny_3c=((534),(380))
-            self.level2_bunny_no_hide=[bunny_1a,bunny_2c,bunny_3b]
-            for bunny in self.level2_bunny_no_hide:
-                bunnies.bunny_print_no_hide(screen,bunny)
-            self.level2_bunny_small_hide=(bunny_1b),(bunny_1c),(bunny_2a),(bunny_2b),(bunny_3a),(bunny_3c)
-            for bunny in self.level2_bunny_small_hide:
-                bunnies.bunny_print_small_hide(screen,bunny)
+            self.level2_bunny_no_hide_gA=[bunny_1a]
+            self.level2_bunny_no_hide_gB=[bunny_3b]
+            self.level2_bunny_no_hide_gC=[bunny_2c]
+            if self.L2gA_NH_scare==False:
+                for bunny in self.level2_bunny_no_hide_gA:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+            if self.L2gB_NH_scare==False:
+                for bunny in self.level2_bunny_no_hide_gB:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+            if self.L2gC_NH_scare==False:
+                for bunny in self.level2_bunny_no_hide_gC:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+
+                self.level2_bunny_small_hide_gA=((bunny_2a),(bunny_3a))
+                self.level2_bunny_small_hide_gB=((bunny_1b),(bunny_2b))
+                self.level2_bunny_small_hide_gC=((bunny_1c),(bunny_3c))
+
+                #for bunny in self.level2_bunny_small_hide:
+                   # bunnies.bunny_print_small_hide(screen,bunny)
+
+
+            if self.L2gA_NH_scare==0:
+                for bunny in self.level2_bunny_small_hide_gA:
+                    bunnies.bunny_print_small_hide(screen,bunny)
+            if self.L2gB_NH_scare==0:
+                for bunny in self.level2_bunny_small_hide_gB:
+                    bunnies.bunny_print_small_hide(screen,bunny)
+            if self.L2gC_NH_scare==0:
+                for bunny in self.level2_bunny_small_hide_gC:
+                    bunnies.bunny_print_small_hide(screen,bunny)
 
 def bunny_test(screen):
     background = pygame.image.load('test_bunny_square.png').convert_alpha()
@@ -317,18 +391,18 @@ class Level3_supper_puppy():
         surface.blit(self.surface, self.location)
 
 def level_determine(dt):
-    if dt<=20000:
+    if dt<=2000:
         level=1
-        print ("level 1")
-    elif (dt>=20001 and dt<=40000):
+        #print ("level 1")
+    elif (dt>=2001 and dt<=4000):
         level=2
-        print ("level 2")
-    elif dt>=40001 and dt<=60000:
+       # print ("level 2")
+    elif dt>=4001 and dt<=6000:
         level=3
-        print ("level 3")
+        #print ("level 3")
     else:
         level=4
-        print ("game over")
+        #print ("game over")
     #print (dt)
     return level
 
@@ -342,6 +416,7 @@ def main():
     #Bunnies = bunnies(resolution)
     fix_dog = (266, 490)
     fix_bunny=(0, 380)
+    scare=False
     Supper_Bunny=bunnies()
    # Supper_Pupppy=supper_puppy(fix_dog)
     running = True
@@ -363,18 +438,16 @@ def main():
                 if event.key == pygame.K_UP:
                     Supper_Bunny.scare(fix_dog, Level)
                     print("SCARE")
+                    #scare=True
             #elif event.type == pygame.
         Level=level_determine(Time)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
-            Supper_Bunny=bunnies()
 
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
-            Supper_Bunny=bunnies()
         elif Level==3:
             Supper_Pupppy=Level3_supper_puppy(fix_dog)
-            Supper_Bunny=bunnies()
 
         Supper_Pupppy.update(dt)
 
@@ -383,9 +456,12 @@ def main():
        # bunnies.draw(screen)
         
         map(screen,Level)
-        Supper_Pupppy.image(screen)
+        
         Supper_Bunny.level_system(Level,screen)
-      
+        if scare==True:
+            Supper_Bunny.grass_overwrite(screen,fix_dog,Level)
+        #scare=False
+        Supper_Pupppy.image(screen)
         Supper_Pupppy.draw(screen)
         #Supper_Bunny.draw(screen)
         mouse_resaponse(screen)
