@@ -70,16 +70,33 @@ class bunnies():
         self.level3_bunny_no_hide_gA=[]
         self.level3_bunny_no_hide_gB=[]
         self.level3_bunny_no_hide_gC=[]
+        self.level3_bunny_no_hide_gD=[]
+        self.level3_bunny_no_hide_gE=[]
+        self.level3_bunny_no_hide_gF=[]
+
+
+
 
         self.level3_bunny_small_hide=[]
         self.level3_bunny_small_hide_gA=[]
         self.level3_bunny_small_hide_gB=[]
         self.level3_bunny_small_hide_gC=[]
+        self.level3_bunny_small_hide_gD=[]
+        self.level3_bunny_small_hide_gE=[]
+        self.level3_bunny_small_hide_gF=[]
+
+
 
         self.level3_bunny_big_hide=[]
         self.level3_bunny_big_hide_gA=[]
         self.level3_bunny_big_hide_gB=[]
         self.level3_bunny_big_hide_gC=[]
+        self.level3_bunny_big_hide_gD=[]
+        self.level3_bunny_big_hide_gE=[]
+        self.level3_bunny_big_hide_gF=[]
+
+
+
 
         self.L1gA_scare=False
         self.L1gB_scare=False
@@ -97,15 +114,25 @@ class bunnies():
         self.L3gA_NH_scare=0
         self.L3gB_NH_scare=0
         self.L3gC_NH_scare=0
+        self.L3gD_NH_scare=0
+        self.L3gE_NH_scare=0
+        self.L3gF_NH_scare=0
 
 
         self.L3gA_SH_scare=0
         self.L3gB_SH_scare=0
         self.L3gC_SH_scare=0
+        self.L3gD_SH_scare=0
+        self.L3gE_SH_scare=0
+        self.L3gF_SH_scare=0
+
 
         self.L3gA_BH_scare=0
         self.L3gB_BH_scare=0
         self.L3gC_BH_scare=0
+        self.L3gD_BH_scare=0
+        self.L3gE_BH_scare=0
+        self.L3gF_BH_scare=0
 
         
 
@@ -210,6 +237,8 @@ class bunnies():
             else:
                 print("level 3 group not detected")
             print(self.L3gC_SH_scare)
+
+
     def level_3_small_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
         if scare_level_tracker==0:
                 for bunny in hide_type_group:
@@ -217,111 +246,73 @@ class bunnies():
         elif scare_level_tracker==1:
                 for bunny in hide_type_group:
                     bunnies.level3_bunny_print_small_hide(screen,bunny,scare_level_tracker)
+
+
+    def level_3_big_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
+        
+            if scare_level_tracker==0:
+                for bunny in hide_type_group:
+                    bunnies.level3_bunny_print_big_hide(screen,bunny,scare_level_tracker)
+            elif scare_level_tracker==1:
+                for bunny in hide_type_group:
+                    bunnies.level3_bunny_print_big_hide(screen,bunny,scare_level_tracker)
+            elif scare_level_tracker==2:
+                for bunny in hide_type_group:
+                    bunnies.level3_bunny_print_big_hide(screen,bunny,scare_level_tracker)
+
+
+    def level_1_2_no_hide_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
+        if scare_level_tracker==False:
+                for bunny in hide_type_group:
+                    bunnies.bunny_print_no_hide(screen,bunny)
+
+    def level_1_2_small_hide_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
+            if scare_level_tracker==0:
+                for bunny in hide_type_group:
+                    bunnies.bunny_print_small_hide(screen,bunny,scare_level_tracker)
+            elif scare_level_tracker==1:
+                for bunny in hide_type_group:
+                    bunnies.bunny_print_small_hide(screen,bunny,scare_level_tracker)
+
+    def level_3_no_hide_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
+            if scare_level_tracker==False:
+                for bunny in hide_type_group:
+                    bunnies.level3_bunny_print_no_hide(screen,bunny)
+
     def Level_3_kill_system(self,screen):
-            if self.L3gA_NH_scare==False:
-                for bunny in self.level3_bunny_no_hide_gA:
-                    bunnies.level3_bunny_print_no_hide(screen,bunny)
-            if self.L3gB_NH_scare==False:
-                for bunny in self.level3_bunny_no_hide_gB:
-                    bunnies.level3_bunny_print_no_hide(screen,bunny)
-            if self.L3gC_NH_scare==False:
-                for bunny in self.level3_bunny_no_hide_gC:
-                    bunnies.level3_bunny_print_no_hide(screen,bunny)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gA_NH_scare,self.level3_bunny_no_hide_gA, screen)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gB_NH_scare,self.level3_bunny_no_hide_gB, screen)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gC_NH_scare,self.level3_bunny_no_hide_gC, screen)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gD_NH_scare,self.level3_bunny_no_hide_gD, screen)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gE_NH_scare,self.level3_bunny_no_hide_gE, screen)
+            bunnies.level_3_no_hide_scare_tracker(self,self.L3gF_NH_scare,self.level3_bunny_no_hide_gF, screen)
+
 
             bunnies.level_3_small_scare_tracker(self,self.L3gA_SH_scare,self.level3_bunny_small_hide_gA, screen)
-            if self.L3gA_SH_scare==0:
-                for bunny in self.level3_bunny_small_hide_gA:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny,self.L3gA_SH_scare)
-            elif self.L3gA_SH_scare==1:
-                for bunny in self.level3_bunny_small_hide_gA:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny,self.L3gA_SH_scare)
-
-            if self.L3gB_SH_scare==0:
-                for bunny in self.level3_bunny_small_hide_gB:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny, self.L3gB_SH_scare)
-            elif self.L3gB_SH_scare==1:
-                for bunny in self.level3_bunny_small_hide_gB:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny,self.L3gB_SH_scare)
-
-            if self.L3gC_SH_scare==0:
-                for bunny in self.level3_bunny_small_hide_gC:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny,self.L3gC_SH_scare)
-            elif self.L3gC_SH_scare==1:
-                for bunny in self.level3_bunny_small_hide_gC:
-                    bunnies.level3_bunny_print_small_hide(screen,bunny,self.L3gC_SH_scare)
-
-            if self.L3gA_BH_scare==0:
-                for bunny in self.level3_bunny_big_hide_gA:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gA_BH_scare)
-            elif self.L3gA_BH_scare==1:
-                for bunny in self.level3_bunny_big_hide_gA:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gA_BH_scare)
-            elif self.L3gA_BH_scare==2:
-                for bunny in self.level3_bunny_big_hide_gA:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gA_BH_scare)
-
-            if self.L3gB_BH_scare==0:
-                for bunny in self.level3_bunny_big_hide_gB:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny, self.L3gB_BH_scare)
-            elif self.L3gB_BH_scare==1:
-                for bunny in self.level3_bunny_big_hide_gB:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gB_BH_scare)
-            elif self.L3gB_BH_scare==2:
-                for bunny in self.level3_bunny_big_hide_gB:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gB_BH_scare)
+            bunnies.level_3_small_scare_tracker(self,self.L3gB_SH_scare,self.level3_bunny_small_hide_gB, screen)
+            bunnies.level_3_small_scare_tracker(self,self.L3gC_SH_scare,self.level3_bunny_small_hide_gC, screen)
+            bunnies.level_3_small_scare_tracker(self,self.L3gD_SH_scare,self.level3_bunny_small_hide_gD, screen)
+            bunnies.level_3_small_scare_tracker(self,self.L3gE_SH_scare,self.level3_bunny_small_hide_gE, screen)
+            bunnies.level_3_small_scare_tracker(self,self.L3gF_SH_scare,self.level3_bunny_small_hide_gF, screen)
 
 
-            if self.L3gC_BH_scare==0:
-                for bunny in self.level3_bunny_big_hide_gC:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gC_BH_scare)
-            elif self.L3gC_BH_scare==1:
-                for bunny in self.level3_bunny_big_hide_gC:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gC_SH_scare)
-            elif self.L3gC_BH_scare==2:
-                for bunny in self.level3_bunny_big_hide_gC:
-                    bunnies.level3_bunny_print_big_hide(screen,bunny,self.L3gA_SH_scare)
+            bunnies.level_3_big_scare_tracker(self,self.L3gA_BH_scare,self.level3_bunny_big_hide_gA, screen)
+            bunnies.level_3_big_scare_tracker(self,self.L3gB_BH_scare,self.level3_bunny_big_hide_gB, screen)
+            bunnies.level_3_big_scare_tracker(self,self.L3gC_BH_scare,self.level3_bunny_big_hide_gC, screen)
+            bunnies.level_3_big_scare_tracker(self,self.L3gD_BH_scare,self.level3_bunny_big_hide_gD, screen)
+            bunnies.level_3_big_scare_tracker(self,self.L3gE_BH_scare,self.level3_bunny_big_hide_gE, screen)
+            bunnies.level_3_big_scare_tracker(self,self.L3gF_BH_scare,self.level3_bunny_big_hide_gF, screen)
+           
 
     def Level_2_kill_system(self,screen):
-            if self.L2gA_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gA:
-                    bunnies.bunny_print_no_hide(screen,bunny)
-            if self.L2gB_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gB:
-                    bunnies.bunny_print_no_hide(screen,bunny)
-            if self.L2gC_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gC:
-                    bunnies.bunny_print_no_hide(screen,bunny)
+            bunnies.level_1_2_no_hide_scare_tracker(self,self.L2gA_NH_scare,self.level2_bunny_no_hide_gA, screen)
+            bunnies.level_1_2_no_hide_scare_tracker(self,self.L2gB_NH_scare,self.level2_bunny_no_hide_gB, screen)
+            bunnies.level_1_2_no_hide_scare_tracker(self,self.L2gC_NH_scare,self.level2_bunny_no_hide_gC, screen)
 
-            if self.L2gA_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
-            elif self.L2gA_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
-            elif self.L2gA_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
+            bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gA_SH_scare,self.level2_bunny_small_hide_gA, screen)
+            bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gB_SH_scare,self.level2_bunny_small_hide_gB, screen)
+            bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gC_SH_scare,self.level2_bunny_small_hide_gC, screen)
 
-            if self.L2gB_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny, self.L2gB_SH_scare)
-            elif self.L2gB_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gB_SH_scare)
-            elif self.L2gB_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gB_SH_scare)
-
-
-            if self.L2gC_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gC:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gC_SH_scare)
-            elif self.L2gC_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gC:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gC_SH_scare)
-            elif self.L2gC_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
 
     def level_system(self,level,screen):
         if level==1:
@@ -375,6 +366,9 @@ class bunnies():
             self.level3_bunny_no_hide_gA=[bunny_1a]
             self.level3_bunny_no_hide_gB=[]
             self.level3_bunny_no_hide_gC=[bunny_3c]
+            self.level3_bunny_no_hide_gD=[]
+            self.level3_bunny_no_hide_gE=[]
+            self.level3_bunny_no_hide_gF=[bunny_1f,bunny_2f]
             #self.level3_bunny_no_hide=[bunny_1a,bunny_1f,bunny_2f,bunny_3c]
             #for bunny in self.level3_bunny_no_hide:
             #    bunnies.level3_bunny_print_no_hide(screen,bunny)
@@ -382,6 +376,9 @@ class bunnies():
             self.level3_bunny_small_hide_gA=[bunny_3a]
             self.level3_bunny_small_hide_gB=[bunny_1b, bunny_2b]
             self.level3_bunny_small_hide_gC=[bunny_1c]
+            self.level3_bunny_small_hide_gD=[bunny_2d]
+            self.level3_bunny_small_hide_gE=[bunny_1e, bunny_3e]
+            self.level3_bunny_small_hide_gF=[]
 
             #self.level3_bunny_small_hide=(bunny_1b),(bunny_1c),(bunny_1e),(bunny_2b),(bunny_2d),(bunny_3a),(bunny_3e)
 
@@ -418,54 +415,16 @@ class bunnies():
             self.level2_bunny_no_hide_gA=[bunny_1a]
             self.level2_bunny_no_hide_gB=[bunny_3b]
             self.level2_bunny_no_hide_gC=[bunny_2c]
-            if self.L2gA_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gA:
-                    bunnies.bunny_print_no_hide(screen,bunny)
-            if self.L2gB_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gB:
-                    bunnies.bunny_print_no_hide(screen,bunny)
-            if self.L2gC_NH_scare==False:
-                for bunny in self.level2_bunny_no_hide_gC:
-                    bunnies.bunny_print_no_hide(screen,bunny)
 
-                self.level2_bunny_small_hide_gA=((bunny_2a),(bunny_3a))
-                self.level2_bunny_small_hide_gB=((bunny_1b),(bunny_2b))
-                self.level2_bunny_small_hide_gC=((bunny_1c),(bunny_3c))
+
+            self.level2_bunny_small_hide_gA=[bunny_2a,bunny_3a]
+            self.level2_bunny_small_hide_gB=[bunny_1b,bunny_2b]
+            self.level2_bunny_small_hide_gC=[bunny_1c,bunny_3c]
 
                 #for bunny in self.level2_bunny_small_hide:
                    # bunnies.bunny_print_small_hide(screen,bunny)
+            bunnies.Level_2_kill_system(self,screen)
 
-
-            if self.L2gA_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
-            elif self.L2gA_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
-            elif self.L2gA_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
-
-            if self.L2gB_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny, self.L2gB_SH_scare)
-            elif self.L2gB_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gB_SH_scare)
-            elif self.L2gB_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gB:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gB_SH_scare)
-
-
-            if self.L2gC_SH_scare==0:
-                for bunny in self.level2_bunny_small_hide_gC:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gC_SH_scare)
-            elif self.L2gC_SH_scare==1:
-                for bunny in self.level2_bunny_small_hide_gC:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gC_SH_scare)
-            elif self.L2gC_SH_scare==2:
-                for bunny in self.level2_bunny_small_hide_gA:
-                    bunnies.bunny_print_small_hide(screen,bunny,self.L2gA_SH_scare)
 
 
 def bunny_test(screen):
