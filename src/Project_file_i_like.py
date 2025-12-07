@@ -27,7 +27,8 @@ def map(screen, level):
         if level==0:
             background = pygame.image.load('introduction_to_supper_puppy.png').convert_alpha()
             screen.blit(background, ((0), (0)))
-        if level==1:
+            #print("level 0 map")
+        elif level==1:
             background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
             screen.blit(background, ((0), (0)))
         elif level==2:
@@ -626,10 +627,10 @@ def bunny_test(screen):
 def move_right(cordinates,level):
     x_cordinate, y_cordinate=cordinates
     if level==0:
-        if x_cordinate>=665:
+        if x_cordinate>=532:
             new_cordinates=cordinates
         else:
-            new_cordinates=((x_cordinate +133), (y_cordinate))
+            new_cordinates=((x_cordinate +266), (y_cordinate))
     if level==1:
         if x_cordinate>=532:
             new_cordinates=cordinates
@@ -658,7 +659,7 @@ def move_left(cordinates,level):
         if x_cordinate<=0:
             new_cordinates=cordinates
         else:
-            new_cordinates=(x_cordinate -133), (y_cordinate)
+            new_cordinates=(x_cordinate -266), (y_cordinate)
     if level==1:
         if x_cordinate<=0:
             new_cordinates=cordinates
@@ -751,23 +752,26 @@ class Level3_supper_puppy():
     def draw(self, surface):
         surface.blit(self.surface, self.location)
 
-def level_determine(dt):
-    if dt<=20000:
-        level=0
-        #print ("level 1")
-    elif (dt>=20001 and dt<=40000):
-        level=1
-       # print ("level 2")
-    elif dt>=40001 and dt<=60000:
-        level=2
-        #print ("level 3")
-    elif dt>=60001 and dt<=80000:
-        level=3
-    else:
-        level=4
-        #print ("game over")
+def level_determine(pause,dt):
+    if pause==False:
+        if dt<=10000:
+            level=0
+            #print ("level 1")
+        elif (dt>=10001 and dt<=20000):
+            level=1
+        # print ("level 2")
+        elif dt>=20001 and dt<=40000:
+            level=2
+            #print ("level 3")
+        elif dt>=40001 and dt<=60000:
+            level=3
+        else:
+            level=4
+            #print ("game over")
     #print (dt)
     return level
+
+
 
 def main():
     pygame.init()
@@ -781,15 +785,19 @@ def main():
     fix_bunny=(0, 380)
     scare=False
     Supper_Bunny=bunnies()
-   # Supper_Pupppy=supper_puppy(fix_dog)
+    Pause=False
     running = True
     fullscreen=False
-    #Level=level_determine(dt)
-    Level=1
-    powerup=False
+    Level=level_determine(Pause, dt)
+    #Level=1
     powerups=3
+    powerup=False
+    
+    
     while running:
+        
         Time=pygame.time.get_ticks()
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -813,16 +821,18 @@ def main():
                     
                     #scare=True
             #elif event.type == pygame.
-        #Level=level_determine(Time)
+        Level=level_determine(Pause, Time)
         if Level==1:   
             Supper_Pupppy=supper_puppy(fix_dog)
+            print(powerups)
 
         elif Level==2:
             Supper_Pupppy=supper_puppy(fix_dog)
         elif Level==3:
             Supper_Pupppy=Level3_supper_puppy(fix_dog)
         else:
-            Supper_Pupppy=Level3_supper_puppy(fix_dog)
+            Supper_Pupppy=supper_puppy(fix_dog)
+            print(f'before {powerups}')
 
         Supper_Pupppy.update(dt)
 
