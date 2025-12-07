@@ -45,7 +45,10 @@ def map(screen, level):
 
 class bunnies():
     def __init__(self):
-
+        self.level1_bunny_count=0
+        self.no_hide_bunny_count=0
+        self.small_hide_bunny_count=0
+        self.big_hide_bunny_count=0
         #self.surface = self.update_surface()
        
         self.level1_bunny_no_hide_gA=[]
@@ -156,9 +159,8 @@ class bunnies():
 
         NameTag=screen.blit(background, (bunny))
 
-    def scare(self, cordinates_dog, level, powerup):
+    def scare_level_1(self, powerup, cordinates_dog, level):
         x_cordinate,y_cordinate=cordinates_dog
-       # if cordinates of dog  x=0 remove group a from 
         if level==1:
             if x_cordinate==0:
                 self.L1gA_scare+=1
@@ -172,13 +174,18 @@ class bunnies():
             else:
                 print("level 1 group not detected")
             print(self.L1gA_scare)
+
+    def scare_level_2(self, powerup, cordinates_dog, level):
+        x_cordinate,y_cordinate=cordinates_dog
         if level==2:
             if x_cordinate==0:
-                self.L2gA_NH_scare+=1
+                
+                self.L2gA_NH_scare=1
                 if powerup==True:
-                    self.L2gA_SH_scare+=2
+                    self.L2gA_SH_scare=2
                 else:
-                    self.L2gA_SH_scare+=1
+                    if self.L2gA_SH_scare<2:
+                        self.L2gA_SH_scare+=1
                 print("L2gA")
             elif x_cordinate==266:
                 self.L2gB_NH_scare+=1
@@ -186,6 +193,8 @@ class bunnies():
                     self.L2gB_SH_scare+=2
                 else:
                     self.L2gB_SH_scare+=1
+                    if self.L2gB_SH_scare<2:
+                        self.L2gB_SH_scare+=1
                 print("L2gB")
             elif x_cordinate==532:
                 self.L2gC_NH_scare+=1
@@ -199,74 +208,158 @@ class bunnies():
             print(self.L2gC_SH_scare)
 
 
-        if level==3:
+    def test_level3_scare(self, no_hide, small_hide, big_hide, powerup, level):
+            if level==3:
+                no_hide+=1
+                if powerup==True:
+                    small_hide+=2
+                    self.L3gA_BH_scare+=3
+                else:
+                    if small_hide<3:
+                        small_hide+=1
+                    if big_hide<4:
+                        big_hide+=1
+                if no_hide==1:
+                        self.no_hide_bunny_count+=1
+                if small_hide==2:
+                            self.small_hide_bunny_count+=1
+                if big_hide==3:
+                            self.big_hide_bunny_count+=1
+                print( f"in {self.no_hide_bunny_count} no hide counter ")
+                print( f"in {self.small_hide_bunny_count} small hide counter ")
+                print( f"in {self.big_hide_bunny_count} big hide counter ")
+
+    def scare_level_3(self, powerup, cordinates_dog, level):
+            x_cordinate,y_cordinate=cordinates_dog
+
             if x_cordinate==0:
+                bunny=bunnies()
+                #bunny.test_level3_scare(self.L3gA_NH_scare, self.L3gA_SH_scare, self.L3gA_BH_scare, powerup, level)
                 self.L3gA_NH_scare+=1
                 if powerup==True:
                     self.L3gA_SH_scare+=2
                     self.L3gA_BH_scare+=3
                 else:
-                    self.L3gA_SH_scare+=1
-                    self.L3gA_BH_scare+=1
-                print("L3gA")
+                    if self.L3gA_SH_scare<3:
+                        self.L3gA_SH_scare+=1
+                    if self.L3gA_BH_scare<4:
+                        self.L3gA_BH_scare+=1
+                if self.L3gA_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gA_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gA_BH_scare==3:
+                            self.big_hide_bunny_count+=1
+                        
+                #print("L3gA")
             elif x_cordinate==133:
+
                 self.L3gB_NH_scare+=1
                 if powerup==True:
                     self.L3gB_SH_scare+=2
                     self.L3gB_BH_scare+=3
                 else:
-                    self.L3gB_SH_scare+=1
-                    self.L3gB_BH_scare+=1
+                    if self.L3gB_SH_scare<3:
+                        self.L3gB_SH_scare+=1
+                    if self.L3gB_BH_scare<4:
+                        self.L3gB_BH_scare+=1
+                if self.L3gB_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gB_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gB_BH_scare==3:
+                            self.big_hide_bunny_count+=1
                 print("L3gB")
             elif x_cordinate==266:
+
                 self.L3gC_NH_scare+=1
                 if powerup==True:
                     self.L3gC_SH_scare+=2
                     self.L3gC_BH_scare+=3
                 else:
-                    self.L3gC_SH_scare+=1
-                    self.L3gC_BH_scare+=1
+                    if self.L3gC_SH_scare<3:
+                        self.L3gC_SH_scare+=1
+                    if self.L3gC_BH_scare<4:
+                        self.L3gC_BH_scare+=1
+                if self.L3gC_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gC_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gC_BH_scare==3:
+                            self.big_hide_bunny_count+=1
                 print("L3gC")
             elif x_cordinate==399:
+
                 self.L3gD_NH_scare+=1
                 if powerup==True:
                     self.L3gD_SH_scare+=2
                     self.L3gD_BH_scare+=3
                 else:
-                    self.L3gD_SH_scare+=1
-                    self.L3gD_BH_scare+=1
+                    if self.L3gD_SH_scare<3:
+                        self.L3gD_SH_scare+=1
+                    if self.L3gD_BH_scare<4:
+                        self.L3gD_BH_scare+=1
+                if self.L3gD_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gD_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gD_BH_scare==3:
+                            self.big_hide_bunny_count+=1
                 print("L3gD")
+
+
             elif x_cordinate==532:
-                #self.L3gF_NH_scare=1
+                self.L3gE_NH_scare+=1
                 if powerup==True:
                     self.L3gE_SH_scare+=2
                     self.L3gE_BH_scare+=3
                 else:
-                    self.L3gE_SH_scare+=1
-                    self.L3gE_BH_scare+=1
-                #if self.L3gE_SH_scare<=1:
-                #    self.L3gE_SH_scare+=1
-                #if self.L3gE_BH_scare<=2:
-                #    self.L3gE_BH_scare+=1
+                    if self.L3gE_SH_scare<3:
+                        self.L3gE_SH_scare+=1
+                    if self.L3gE_BH_scare<4:
+                        self.L3gE_BH_scare+=1
+                if self.L3gE_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gE_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gE_BH_scare==3:
+                            self.big_hide_bunny_count+=1
                 print("L3gE")
+
+
             elif x_cordinate==665:
-                self.L3gF_NH_scare=1
-                #if self.L3gF_SH_scare<=1:
-                 #   self.L3gF_SH_scare+=1
+                self.L3gF_NH_scare+=1
                 if powerup==True:
                     self.L3gF_SH_scare+=2
                     self.L3gF_BH_scare+=3
                 else:
-                    self.L3gF_SH_scare+=1
-                    self.L3gF_BH_scare+=1
-                
-                #if self.L3gF_BH_scare<=2:
-               #     self.L3gF_BH_scare+=1
-               # print(self.L3gF_NH_scare)
-               # print(self.L3gF_SH_scare)
-               # print(self.L3gF_BH_scare)
+                    if self.L3gF_SH_scare<3:
+                        self.L3gF_SH_scare+=1
+                    if self.L3gF_BH_scare<4:
+                        self.L3gF_BH_scare+=1
+                if self.L3gF_NH_scare==1:
+                        self.no_hide_bunny_count+=1
+                if self.L3gF_SH_scare==2:
+                            self.small_hide_bunny_count+=1
+                if self.L3gF_BH_scare==3:
+                            self.big_hide_bunny_count+=1
             else:
                 print("level 3 group not detected")
+            print( f"{self.no_hide_bunny_count} no hide counter ")
+            print( f"{self.small_hide_bunny_count} small hide counter ")
+            print( f"{self.big_hide_bunny_count} big hide counter ")
+        
+    def scare(self, cordinates_dog, level, powerup):
+        x_cordinate,y_cordinate=cordinates_dog
+       # if cordinates of dog  x=0 remove group a from 
+        if level==1:
+            bunnies.scare_level_1(self, powerup, cordinates_dog, level)
+
+        if level==2:
+            bunnies.scare_level_2(self, powerup, cordinates_dog, level)
+
+        if level==3:
+            bunnies.scare_level_3(self, powerup, cordinates_dog, level)
             print(self.L3gC_SH_scare)
 
     def level_3_small_scare_tracker(self,scare_level_tracker,hide_type_group, screen):
