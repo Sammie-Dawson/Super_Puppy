@@ -45,9 +45,12 @@ def map(screen, level, win):
             screen.blit(background, ((0), (0)))
         elif level==4:
             if win==True:
-                 print("you win!")
+                background = pygame.image.load('you_won.png').convert_alpha()
+                screen.blit(background, ((0), (0)))
             elif win==False:
-                 print("you lost")
+                background = pygame.image.load('you_lost.png').convert_alpha()
+                screen.blit(background, ((0), (0)))
+                print("you lost")
             else:
                  print("win condition not detected")
             print("level 4 map!")
@@ -864,9 +867,13 @@ def main():
                     print(elapsed_milliseconds//1000)
                     reset_screen(screen)
                     pygame.display.flip()
-                    pygame.time.delay(5000)
+                    pygame.time.delay(2000)
                     start_time = pygame.time.get_ticks()
                     print(elapsed_milliseconds//1000)
+                    if event.key == pygame.K_q:
+                        if Level==4:
+                            running = False
+                              
             #elif event.type == pygame.
         current_time=pygame.time.get_ticks()
         elapsed_milliseconds = current_time - start_time
