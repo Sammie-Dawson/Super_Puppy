@@ -12,21 +12,15 @@ def reset_screen(screen):
     background = pygame.image.load('reset_screen.png').convert_alpha()
     screen.blit(background, ((0), (0)))
 
-def map(screen, level, win):
+def map(screen, level, win, scroll):
     
         if level==0:
             background = pygame.image.load('introduction_to_supper_puppy.png').convert_alpha()
             screen.blit(background, ((0), (0)))
             #print("level 0 map")
-        elif level==1:
-            background = pygame.image.load('supper puppy_level1_plans.png').convert_alpha()
-            screen.blit(background, ((0), (0)))
-        elif level==2:
-            background = pygame.image.load('supper puppy_level2_plans.png').convert_alpha()
-            screen.blit(background, ((0), (0)))
-        elif level==3:
-            background = pygame.image.load('supper puppy_level3_plan.png').convert_alpha()
-            screen.blit(background, ((0), (0)))
+        elif level>=1 and level<=3:
+            background = pygame.image.load('big_scrollinngmap.png').convert_alpha()
+            screen.blit(background, ((0),(scroll)))
         elif level==4:
             if win==True:
                 background = pygame.image.load('you_win.png').convert_alpha()
@@ -414,10 +408,7 @@ class bunnies():
                             self.big_hide_bunny_count+=1
             else:
                 print("level 3 group not detected")
-            print( f"{self.no_hide_bunny_count} no hide counter ")
-            print( f"{self.small_hide_bunny_count} small hide counter ")
-            print( f"{self.big_hide_bunny_count} big hide counter ")
-            print( f"{self.Total_bunny_count} Total counter ")
+            
         
     def scare(self, cordinates_dog, level, powerup, screen):
         x_cordinate,y_cordinate=cordinates_dog
@@ -672,19 +663,6 @@ class supper_puppy():
         self.alpha = 255
         self.surface = self.update_surface()
 
-    def move_dog(self):
-        position=self.location
-        key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT]: # up key
-            position= move_left(self.location)
-            print ("moved left")
-        elif key[pygame.K_RIGHT]: # up key
-            position=move_right(self.location)
-            print("moved right")
-        else:
-            position=position
-        self.location=position
-
     def update(self, dt):
         self.age += dt
         if self.age > self.life:
@@ -726,21 +704,59 @@ def level_determine(pause,dt):
     if pause==False:
         if dt<=10000:
             level=0
-            #print ("level 1")
+
         elif (dt>=10001 and dt<=15000):
             level=1
-        # print ("level 2")
         elif dt>=15001 and dt<=25000:
             level=2
-            #print ("level 3")
         elif dt>=25001 and dt<=30000:
             level=3
         else:
             level=4
-            #print ("game over")
-    #print (dt)
     return level
 
+def scroll_determine(dt):
+
+        if dt<=10000:
+            scroll=(0)         
+        elif (dt>=10001 and dt<=15000):
+            scroll=(-1200)
+        elif dt>=15001 and dt<=25000:
+            if (dt>=15001 and dt<=15100):
+                 scroll=(-1200)
+            elif (dt>=15101 and dt<=15200):
+                 scroll=(-1100)
+            elif (dt>=15201 and dt<=15300):
+                 scroll=(-1000) 
+            elif (dt>=15301 and dt<=15400): 
+                 scroll=(-900)
+            elif (dt>=15401 and dt<=15500): 
+                 scroll=(-600)
+            
+            if (dt>=15501 and dt<=24200):
+                 scroll=(-600)
+
+            elif (dt>=24201 and dt<=24300):
+                 scroll=(-600)
+            elif (dt>=24301 and dt<=24400):
+                 scroll=(-500)
+            elif (dt>=24401 and dt<=24500):
+                 scroll=(-400) 
+            elif (dt>=24501 and dt<=24600): 
+                 scroll=(-300)
+            elif (dt>=24601 and dt<=24700): 
+                 scroll=(-200)
+            elif (dt>=24701 and dt<=24800):
+                 scroll=(-100)
+            elif (dt>=24801 and dt<=24900):
+                 scroll=(0)
+            elif (dt>=24901 and dt<=25000):
+                 scroll=(0)
+        elif dt>=25001 and dt<=30000:
+            scroll=(0)
+        else:
+            scroll=(0,0)
+        return scroll
 
 def level_timer(time, level):
     sec=time//1000
@@ -761,9 +777,19 @@ def level_timer(time, level):
 
     result=time_left_in_level
     return result
-
-    
-
+  
+def supper_puppy_class_determiner(Level, fix_dog):
+        if Level==1:   
+            Supper_Pupppy=supper_puppy(fix_dog)
+        elif Level==2:
+            Supper_Pupppy=supper_puppy(fix_dog)
+        elif Level==3:
+            Supper_Pupppy=Level3_supper_puppy(fix_dog)
+        elif Level==4:
+            Supper_Pupppy=supper_puppy(fix_dog)
+        else:
+            Supper_Pupppy=supper_puppy(fix_dog)
+        return Supper_Pupppy
 
 def main():
     pygame.init()
@@ -777,12 +803,10 @@ def main():
     Pause=False
     running = True
     Level=level_determine(Pause, dt)
-    #Level=3
     powerups=3
     powerup=False
     start_time = 0
     win=False
-    
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -796,54 +820,39 @@ def main():
                   fix_dog=dog_right
                 if event.key == pygame.K_UP:
                     Supper_Bunny.scare(fix_dog, Level, powerup, screen)
-                    print("SCARE")
-                    #scare=True
                 if event.key == pygame.K_DOWN:
                     if powerups>0:
                         powerup=True
                         powerups-=1
-                        print("Powerup")
                         Supper_Bunny.scare(fix_dog, Level,powerup, screen)
                 if event.key == pygame.K_p:
-                    print(f"delay start {elapsed_milliseconds}")
                     pause_screen(screen)
                     pygame.display.flip()
                     pygame.time.delay(5000)
-                    print(f"delay end {elapsed_milliseconds}")
                 if event.key == pygame.K_r:
-                    print(elapsed_milliseconds//1000)
                     reset_screen(screen)
                     pygame.display.flip()
-                    pygame.time.delay(2000)
+                    pygame.time.delay(1000)
                     start_time = pygame.time.get_ticks()
-                    print(elapsed_milliseconds//1000)
                     if event.key == pygame.K_q:
                         if Level==4:
                             running = False    
         current_time=pygame.time.get_ticks()
         elapsed_milliseconds = current_time - start_time
         Level=level_determine(Pause, elapsed_milliseconds)
-        if Level==1:   
-            Supper_Pupppy=supper_puppy(fix_dog)
-        elif Level==2:
-            Supper_Pupppy=supper_puppy(fix_dog)
-        elif Level==3:
-            Supper_Pupppy=Level3_supper_puppy(fix_dog)
-        elif Level==4:
-            Supper_Pupppy=supper_puppy(fix_dog)
+        if Level==4:
             win=Supper_Bunny.win_condition()
-        else:
-            Supper_Pupppy=supper_puppy(fix_dog)
+        Supper_Pupppy=supper_puppy_class_determiner(Level, fix_dog)
         Supper_Pupppy.update(dt)
-        BLACK = pygame.Color(0, 0, 0)
+        BLACK = pygame.Color(87, 109, 97)
         screen.fill(BLACK)
-        map(screen,Level, win)       
+        scroll=scroll_determine(elapsed_milliseconds)
+        map(screen,Level, win,scroll)       
         Supper_Bunny.level_system(Level,screen, elapsed_milliseconds, powerups)
         powerup=False
         Supper_Pupppy.draw(screen)
         pygame.display.flip()
         dt = clock.tick(12)
-        
     pygame.quit()
 
 if __name__ == "__main__":
