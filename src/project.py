@@ -763,7 +763,8 @@ def level_determine(pause,dt):
         elif dt>=25001 and dt<=30000:
             level=3
         elif dt>=30001:
-             level=4
+            level=4
+
         else:
             level=4
             print("level error")
