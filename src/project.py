@@ -22,7 +22,7 @@ def map(screen, level, win, scroll):
             background = pygame.image.load('big_scrollinngmap.png').convert_alpha()
             screen.blit(background, ((0),(scroll)))
         elif level==4:
-            if win==True:
+            if win==True: 
                 background = pygame.image.load('you_win.png').convert_alpha()
                 screen.blit(background, ((0), (0)))
             elif win==False:
@@ -490,6 +490,57 @@ class bunnies():
             bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gB_SH_scare,self.level2_bunny_small_hide_gB, screen)
             bunnies.level_1_2_small_hide_scare_tracker(self,self.L2gC_SH_scare,self.level2_bunny_small_hide_gC, screen)
 
+    def Restart_Bunnies(self):
+            """
+            Resets all intial values of the __init__ as they were at game start
+            allows 
+                bunny respon after being killed in prievious play thorugh
+                emptys lists that stored those bunnies           
+            """
+         
+            self.no_hide_bunny_count=0
+            self.small_hide_bunny_count=0
+            self.big_hide_bunny_count=0
+            self.Total_bunny_count=0
+
+
+
+
+
+            self.L1gA_scare=False
+            self.L1gB_scare=False
+            self.L1gC_scare=False
+
+            self.L2gA_NH_scare=0
+            self.L2gB_NH_scare=0
+            self.L2gC_NH_scare=0
+
+            self.L2gA_SH_scare=0
+            self.L2gB_SH_scare=0
+            self.L2gC_SH_scare=0
+
+            self.L3gA_NH_scare=0  
+            self.L3gB_NH_scare=0
+            self.L3gC_NH_scare=0  
+            self.L3gD_NH_scare=0
+            self.L3gE_NH_scare=0
+            self.L3gF_NH_scare=0      
+
+            self.L3gA_SH_scare=0  
+            self.L3gB_SH_scare=0      
+            self.L3gC_SH_scare=0  
+            self.L3gD_SH_scare=0  
+            self.L3gE_SH_scare=0      
+            self.L3gF_SH_scare=0
+
+            self.L3gA_BH_scare=0  
+            self.L3gB_BH_scare=0  
+            self.L3gC_BH_scare=0  
+            self.L3gD_BH_scare=0         
+            self.L3gE_BH_scare=0  
+            self.L3gF_BH_scare=0  
+                    
+
     def level_system(self,level,screen, time, powerups):
         level_count_down=level_timer(time, level)
         
@@ -711,8 +762,11 @@ def level_determine(pause,dt):
             level=2
         elif dt>=25001 and dt<=30000:
             level=3
+        elif dt>=30001:
+             level=4
         else:
             level=4
+            print("level error")
     return level
 
 def scroll_determine(dt):
@@ -807,6 +861,7 @@ def main():
     powerup=False
     start_time = 0
     win=False
+    Pause_time=0
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -828,17 +883,19 @@ def main():
                 if event.key == pygame.K_p:
                     pause_screen(screen)
                     pygame.display.flip()
-                    pygame.time.delay(5000)
+                    pygame.time.delay(3000)
+                    Pause_time+=3000
                 if event.key == pygame.K_r:
                     reset_screen(screen)
                     pygame.display.flip()
                     pygame.time.delay(1000)
                     start_time = pygame.time.get_ticks()
-                    if event.key == pygame.K_q:
-                        if Level==4:
-                            running = False    
+                    Supper_Bunny.Restart_Bunnies()
+                    powerups=3
+                if event.key == pygame.K_q:
+                    running = False  
         current_time=pygame.time.get_ticks()
-        elapsed_milliseconds = current_time - start_time
+        elapsed_milliseconds = current_time - (start_time+ Pause_time)
         Level=level_determine(Pause, elapsed_milliseconds)
         if Level==4:
             win=Supper_Bunny.win_condition()
